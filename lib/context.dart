@@ -1,4 +1,3 @@
-
 class Context {
   final String infoPlistPath;
   final String androidManifestPath;
