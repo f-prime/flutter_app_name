@@ -1,0 +1,7 @@
+*.sw[a-z]
+android/
+ios/
+.dart_tool/
+.packages
+
+build/
