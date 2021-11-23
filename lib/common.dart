@@ -50,11 +50,11 @@ String fetchLauncherName(Context context) {
   return launcherName as String;
 }
 
-String? fetchPackageName(Context context) {
+String? fetchId(Context context) {
   final yamlKeyName = context.yamlKeyName;
 
   final Map yamlData = getYamlKeyData(context);
-  final String? packageName = yamlData["package"];
+  final String? id = yamlData["id"];
 
-  return packageName as String?;
+  return id as String?;
 }
