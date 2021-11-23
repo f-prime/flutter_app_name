@@ -19,6 +19,6 @@ void run() {
   android.updateLauncherName(context);
   final packageName = fetchPackageName(context);
   if (packageName != null) {
-    changeBundleId(packageName);
+    await changeBundleId(packageName, <Platform>[]);
   }
 }
