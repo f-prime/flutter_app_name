@@ -17,8 +17,8 @@ void run() {
 
   ios.updateLauncherName(context);
   android.updateLauncherName(context);
-  final packageName = fetchPackageName(context);
-  if (packageName != null) {
-    changeBundleId(packageName, <Platform>[]);
+  final id = fetchId(context);
+  if (id != null) {
+    changeBundleId(id, <Platform>[]);
   }
 }
