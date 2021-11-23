@@ -1,7 +1,9 @@
 library flutter_app_name;
 
-import "context.dart";
+import "package:rename/rename.dart";
 
+import "context.dart";
+import "common.dart";
 import "ios.dart" as ios;
 import "android.dart" as android;
 
@@ -15,4 +17,8 @@ void run() {
 
   ios.updateLauncherName(context);
   android.updateLauncherName(context);
+  final packageName = fetchPackageName(context);
+  if (packageName != null) {
+    changeBundleId(packageName);
+  }
 }
