@@ -1,3 +1,8 @@
+0.2.1
+=====
+
+* macOS desktop app name can be changed
+  
 0.1.1
 =====
 

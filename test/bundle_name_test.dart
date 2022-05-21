@@ -1,8 +1,8 @@
-import "package:test/test.dart";
-
+import "package:flutter_app_name/android.dart" as android;
 import "package:flutter_app_name/context.dart";
 import "package:flutter_app_name/ios.dart" as ios;
-import "package:flutter_app_name/android.dart" as android;
+import 'package:flutter_app_name/macos.dart' as macos;
+import "package:test/test.dart";
 
 void main() {
   final String androidManifest = """
@@ -171,10 +171,79 @@ void main() {
 </plist>
   """;
 
+  final String macosPlist = r"""<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Flutter App Name</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>$(PRODUCT_COPYRIGHT)</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>
+  """;
+
+  final String macosPlistUpdated = r"""<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Test</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>$(PRODUCT_COPYRIGHT)</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>
+  """;
+
   final context = Context(
     yamlKeyName: "flutter_app_name",
     pubspecPath: "test/test_pubspec_good.yaml",
-    infoPlistPath: "ios/Runner/Info.plist",
+    iOSInfoPlistPath: "ios/Runner/Info.plist",
+    macOSInfoPlistPath: "macos/Runner/Info.plist",
     androidManifestPath: "android/app/src/main/AndroidManifest.xml",
   );
 
@@ -201,6 +270,19 @@ void main() {
       ios.setNewBundleName(
           context, iosPlist, '<string>Flutter App Name</string>', "Test"),
       equals(iosPlistUpdated),
+    );
+  });
+
+  test("macOS", () {
+    expect(
+      macos.fetchCurrentBundleName(context, macosPlist),
+      equals('<string>Flutter App Name</string>'),
+    );
+
+    expect(
+      macos.setNewBundleName(
+          context, macosPlist, '<string>Flutter App Name</string>', "Test"),
+      equals(macosPlistUpdated),
     );
   });
 }
