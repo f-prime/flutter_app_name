@@ -1,5 +1,6 @@
 class Context {
-  final String infoPlistPath;
+  final String iOSInfoPlistPath;
+  final String macOSInfoPlistPath;
   final String androidManifestPath;
   final String pubspecPath;
   final String yamlKeyName;
@@ -8,6 +9,7 @@ class Context {
     required this.yamlKeyName,
     required this.androidManifestPath,
     required this.pubspecPath,
-    required this.infoPlistPath,
+    required this.iOSInfoPlistPath,
+    required this.macOSInfoPlistPath,
   });
 }

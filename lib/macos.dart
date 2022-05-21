@@ -19,7 +19,7 @@ String fetchCurrentBundleName(Context context, String plistFileData) {
 
   if (bundleName == null) {
     throw Exception(
-        "Bundle name not found in ${context.iOSInfoPlistPath}. Info.plist might be corrupt.");
+        "Bundle name not found in ${context.macOSInfoPlistPath}. Info.plist might be corrupt.");
   }
 
   return bundleName as String;
@@ -32,12 +32,12 @@ String setNewBundleName(Context context, String plistFileData,
 }
 
 void updateLauncherName(Context context) {
-  final String plistFileData = common.readFile(context.iOSInfoPlistPath);
+  final String plistFileData = common.readFile(context.macOSInfoPlistPath);
   final String desiredBundleName = common.fetchLauncherName(context);
   final String currentBundleName =
       fetchCurrentBundleName(context, plistFileData);
   final String updatedPlistData = setNewBundleName(
       context, plistFileData, currentBundleName, desiredBundleName);
 
-  common.overwriteFile(context.iOSInfoPlistPath, updatedPlistData);
+  common.overwriteFile(context.macOSInfoPlistPath, updatedPlistData);
 }
