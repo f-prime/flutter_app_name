@@ -1,6 +1,6 @@
 name: flutter_app_name
 description: A package that makes it easy to set your flutter app launcher name. 
-version: 0.1.1+packagename
+version: 0.2.1+packagename
 maintainer: Frankie Primerano (@f-prime) 
 homepage: https://github.com/f-prime/flutter_app_name
 
