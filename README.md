@@ -8,7 +8,7 @@ A command-line tool that makes it trivial to set the launcher name for iOS and A
 
 ```
 dev_dependencies:
-  flutter_app_name: ^0.1.1
+  flutter_app_name: ^0.1.2
 
 flutter_app_name:
   name: "My Cool App"
@@ -26,4 +26,4 @@ flutter pub run flutter_app_name
 
 Run the test suite with
 
-`pub run test`
+`dart test`
