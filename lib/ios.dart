@@ -1,44 +1,51 @@
-import "dart:io";
 import "package:xml/xml.dart";
 
 import "context.dart";
 import "common.dart" as common;
 
-String fetchCurrentBundleName(Context context, String plistFileData) {
+Map<String, String> fetchCurrentBundleNames(
+    Context context, String plistFileData) {
   final parsed = XmlDocument.parse(plistFileData);
 
   final allKeys = parsed.findAllElements("key");
   final allValues = parsed.findAllElements("string").toList();
 
-  String? bundleName = null;
+  Map<String, String> bundleNames = {};
 
   allKeys.toList().asMap().forEach((key, val) {
     if (val.toString().contains("CFBundleName")) {
-      bundleName = allValues[key].toString();
+      bundleNames["CFBundleName"] = allValues[key].toString();
+    }
+    if (val.toString().contains("CFBundleDisplayName")) {
+      bundleNames["CFBundleDisplayName"] = allValues[key].toString();
     }
   });
 
-  if (bundleName == null) {
+  if (bundleNames["CFBundleName"] == null) {
     throw Exception(
         "Bundle name not found in ${context.infoPlistPath}. Info.plist might be corrupt.");
   }
 
-  return bundleName as String;
+  return bundleNames;
 }
 
 String setNewBundleName(Context context, String plistFileData,
-    String currentBundleName, String desiredBundleName) {
-  return plistFileData.replaceAll(
-      currentBundleName, "<string>${desiredBundleName}</string>");
+    Map<String, String> currentBundleNames, String desiredBundleName) {
+  var updatedPlistFileData = plistFileData;
+  currentBundleNames.forEach((_, value) {
+    updatedPlistFileData = updatedPlistFileData.replaceAll(
+        value, "<string>${desiredBundleName}</string>");
+  });
+  return updatedPlistFileData;
 }
 
 void updateLauncherName(Context context) {
   final String plistFileData = common.readFile(context.infoPlistPath);
   final String desiredBundleName = common.fetchLauncherName(context);
-  final String currentBundleName =
-      fetchCurrentBundleName(context, plistFileData);
+  final Map<String, String> currentBundleNames =
+      fetchCurrentBundleNames(context, plistFileData);
   final String updatedPlistData = setNewBundleName(
-      context, plistFileData, currentBundleName, desiredBundleName);
+      context, plistFileData, currentBundleNames, desiredBundleName);
 
   common.overwriteFile(context.infoPlistPath, updatedPlistData);
 }
