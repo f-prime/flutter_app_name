@@ -1,4 +1,3 @@
-import "dart:io";
 import "package:xml/xml.dart";
 
 import "context.dart";
@@ -19,7 +18,7 @@ String fetchCurrentBundleName(Context context, String manifestFileData) {
         "Could not find android:label in ${context.androidManifestPath}");
   }
 
-  return label[0] as String;
+  return label[0];
 }
 
 String setNewBundleName(Context context, String manifestFileData,
