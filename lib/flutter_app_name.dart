@@ -1,5 +1,6 @@
 library flutter_app_name;
 
+import "package:rename/enums.dart";
 import "package:rename/rename.dart";
 
 import "context.dart";
@@ -19,6 +20,12 @@ void run() {
   android.updateLauncherName(context);
   final id = fetchId(context);
   if (id != null) {
-    changeBundleId(id, <Platform>[]);
+    Rename.fromTargets(targets: [
+      RenamePlatform.android,
+      RenamePlatform.ios,
+      RenamePlatform.windows,
+      RenamePlatform.web
+    ]).applyWithCommandName(
+        commandName: RenameCommand.setBundleId.name, value: id);
   }
 }

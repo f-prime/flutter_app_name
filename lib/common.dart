@@ -33,7 +33,7 @@ Map getYamlKeyData(Context context) {
         "Your pubspec.yaml file must have a key ${yamlKeyName} in it.");
   }
 
-  return yamlKeyData as Map;
+  return yamlKeyData;
 }
 
 String fetchLauncherName(Context context) {
@@ -47,14 +47,12 @@ String fetchLauncherName(Context context) {
         "You must set the launcher name under the '${yamlKeyName}' section of your pubspec.yaml file.");
   }
 
-  return launcherName as String;
+  return launcherName;
 }
 
 String? fetchId(Context context) {
-  final yamlKeyName = context.yamlKeyName;
-
   final Map yamlData = getYamlKeyData(context);
   final String? id = yamlData["id"];
 
-  return id as String?;
+  return id;
 }

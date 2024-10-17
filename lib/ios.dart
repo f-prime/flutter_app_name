@@ -1,4 +1,3 @@
-import "dart:io";
 import "package:xml/xml.dart";
 
 import "context.dart";
